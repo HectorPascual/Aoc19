@@ -22,4 +22,4 @@ with open('input.txt') as f:
 input[1]=12
 input[2]=2
 
-print(calc_final_state(input))
+print(calc_final_state(input)[0])
