@@ -23,11 +23,11 @@ def get_wire_trace(wire):
 
 
 def find_intersections(trace_1, trace_2):
-    intersections = []
-    for i,j in ((a,b) for a in range(len(trace_1)) for b in range(len(trace_2))):
-        if trace_1[i] == trace_2[j]:
-            intersections.append((trace_1[i]))
-    return intersections
+    #intersections = [] # EXTREMELY INEFFICIENT
+    #for i,j in ((a,b) for a in range(len(trace_1)) for b in range(len(trace_2))):
+        #if trace_1[i] == trace_2[j]:
+         #   intersections.append((trace_1[i]))
+    return list((set(trace_1).intersection(set(trace_2))))
 
 
 def closest_intersection_distance(intersections):
