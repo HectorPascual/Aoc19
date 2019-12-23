@@ -1,17 +1,39 @@
-def calc_final_state(input):
-    """
-    Iterates length/4 times through the array, taking the first position of the group of 4 as the
-    op code, the second and third position values as the index for the parameters of the operation
-    and the last position shows the index where the result will be stored.
-    :param input:
-    :return: the final state of the input array
-    """
-    for i in range(0,int(len(input)/4)+1):
-        if input[0+i*4] == 1:
-            input[input[3+i*4]] = input[input[1+i*4]] + input[input[2+i*4]]
-        elif input[0+i*4] == 2:
-            input[input[3+i*4]] = input[input[1+i*4]] * input[input[2+i*4]]
-        elif input[0+i*4] == 99:
-            break
-    return input
+def calc_final_state(input_arr):
+    i = 0
+    while True:
+        op_code = str(input_arr[0 + i]).zfill(5)
 
+        if op_code[4] != '9': # These case requires no params
+            if op_code[2] == '1':
+                first_param = input_arr[1 + i]  # Inmediate mode
+            else:
+                first_param = input_arr[input_arr[1 + i]]  # Position mode
+
+        if not op_code[4] in ['3','4','9']: # These two cases require 1 param and 99 case 0 params
+            if op_code[1] == '1':
+                scnd_param = input_arr[2 + i]  # Inmediate mode
+            else:
+                scnd_param = input_arr[input_arr[2 + i]]  # Position mode
+
+        if op_code[4] == '1':
+            input_arr[input_arr[3 + i]] = first_param + scnd_param
+            i += 4
+        elif op_code[4] == '2':
+            input_arr[input_arr[3 + i]] = first_param * scnd_param
+            i += 4
+        elif op_code[4] == '3':
+            inp = int(input('Input a number for TEST : '))
+            input_arr[input_arr[1 + i]] = inp
+            i += 2
+        elif op_code[4] == '4':
+            print(input_arr[input_arr[1 + i]])
+            i += 2
+        elif op_code[4] == '99':
+            break
+
+
+with open('input.txt') as f:
+    input_arr = list(map(int, f.readline().replace('\n', '').split(',')))
+
+
+calc_final_state(input_arr)
